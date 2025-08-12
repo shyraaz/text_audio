@@ -2,10 +2,7 @@ import streamlit as st
 from transformers import pipeline 
 import io
 import soundfile as sf
-st.title("🎈 My new app") 
-st.write(  
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+import numpy as np
 
 st.title("Text To Audio App")
 # إعداد الـ pipeline
@@ -23,11 +20,15 @@ with col[0]:
             audio_array = output["audio"]
             sampling_rate = output["sampling_rate"]
     
-            # Convert to WAV bytes
+            # Ensure audio_array is a NumPy array with dtype float32
+            audio_array = np.array(audio_array, dtype=np.float32)
+    
+            # Convert to WAV bytes with explicit subtype
             wav_io = io.BytesIO()
-            sf.write(wav_io, audio_array, sampling_rate, format="WAV")
+            sf.write(wav_io, audio_array, sampling_rate, format="WAV", subtype="PCM_16")
             wav_io.seek(0)
     
             st.audio(wav_io, format="audio/wav", sample_rate=sampling_rate)
+
 
  
