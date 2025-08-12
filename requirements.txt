@@ -5,3 +5,5 @@ encodec
 soundfile
 streamlit>=1.26.0
 transformers[torch]>=4.44.2
+ffmpeg
+
