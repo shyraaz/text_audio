@@ -25,6 +25,9 @@ with col[0]:
     
             # Convert to WAV bytes with explicit subtype
             wav_io = io.BytesIO()
+            st.write(type(audio_array))
+            st.write(getattr(audio_array, 'shape', 'no shape'))
+            st.write(getattr(audio_array, 'dtype', 'no dtype'))
             sf.write(wav_io, audio_array, sampling_rate, format="WAV", subtype="PCM_16")
             wav_io.seek(0)
     
