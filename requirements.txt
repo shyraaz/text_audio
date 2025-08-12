@@ -1,7 +1,2 @@
 streamlit>=1.26.0
 transformers[torch]>=4.44.2
-torch==2.8.0+cpu     --extra-index-url https://download.pytorch.org/whl/cpu
-torchaudio==2.8.0+cpu --extra-index-url https://download.pytorch.org/whl/cpu
-tensorflow-cpu==2.19.0
-encodec
-soundfile
