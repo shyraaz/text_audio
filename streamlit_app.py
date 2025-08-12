@@ -1,5 +1,5 @@
 import streamlit as st
-from transformers import pipeline
+from transformers import pipeline 
  
 st.title("🎈 My new app") 
 st.write(  
