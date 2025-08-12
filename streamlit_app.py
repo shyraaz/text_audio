@@ -1,6 +1,7 @@
 import streamlit as st
 from transformers import pipeline 
- 
+import io
+import soundfile as sf
 st.title("🎈 My new app") 
 st.write(  
     "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
@@ -19,10 +20,14 @@ with col[0]:
     if btn and input_text.strip() != "":
         with st.spinner("قاعدين نحضرو في الصوت..."):
             output = pipe(input_text)
-            audio_bytes = output["audio"]
+            audio_array = output["audio"]
             sampling_rate = output["sampling_rate"]
-            st.audio(audio_bytes, format="audio/wav", sample_rate=sampling_rate)
-    elif btn:
-        st.warning("رجاءً أدخل نص!")
+    
+            # Convert to WAV bytes
+            wav_io = io.BytesIO()
+            sf.write(wav_io, audio_array, sampling_rate, format="WAV")
+            wav_io.seek(0)
+    
+            st.audio(wav_io, format="audio/wav", sample_rate=sampling_rate)
 
  
