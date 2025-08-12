@@ -1,1 +1,5 @@
 streamlit
+transformers[torch]>=4.44.2
+torch
+tensorflow
+encodec
