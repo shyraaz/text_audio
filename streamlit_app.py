@@ -1,6 +1,6 @@
 import streamlit as st
 from transformers import pipeline
-
+ 
 # عنوان التطبيق
 st.title("sentiment analysis")
 
