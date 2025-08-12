@@ -4,34 +4,28 @@ import io
 import soundfile as sf
 import numpy as np
 
-st.title("Text To Audio App")
-# إعداد الـ pipeline
-pipe = pipeline("text-to-speech", model="suno/bark-small", device="cpu")
+import streamlit as st
+from transformers import pipeline
 
-# واجهة Streamlit
-col = st.columns(2)
+# عنوان التطبيق
+st.title("sentiment analysis")
 
-with col[0]: 
-    input_text = st.text_area("Enter Your Text")
-    btn = st.button("Text To Audio")
-    if btn and input_text.strip() != "":
-        with st.spinner("قاعدين نحضرو في الصوت..."):
-            output = pipe(input_text)
-            audio_array = output["audio"]
-            sampling_rate = output["sampling_rate"]
-    
-            # Ensure audio_array is a NumPy array with dtype float32
-            audio_array = np.array(audio_array, dtype=np.float32)
-    
-            # Convert to WAV bytes with explicit subtype
-            wav_io = io.BytesIO()
-            st.write(type(audio_array))
-            st.write(getattr(audio_array, 'shape', 'no shape'))
-            st.write(getattr(audio_array, 'dtype', 'no dtype'))
-            sf.write(wav_io, audio_array, sampling_rate, format="WAV", subtype="PCM_16")
-            wav_io.seek(0)
-    
-            st.audio(wav_io, format="audio/wav", sample_rate=sampling_rate)
+# إعداد الـ pipelines
+sentiment_pipe = pipeline("sentiment-analysis")
+tts_pipe = pipeline("text-to-speech", model="suno/bark-small", device="cpu")
 
+# إدخال النص
+user_text = st.text_input("أدخل النص هنا:")
+
+# زر التنفيذ
+if st.button("حلل النص و اسمع الصوت"):
+    # تحليل المشاعر
+    sentiment_result = sentiment_pipe(user_text)
+    st.write("نتيجة تحليل المشاعر:")
+    st.write(sentiment_result)
+    
+    # تحويل النص إلى صوت
+    audio_result = tts_pipe(user_text)
+    st.audio(audio_result["audio"], format="audio/wav")
 
  
