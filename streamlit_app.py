@@ -1,11 +1,10 @@
 import streamlit as st
+from transformers import pipeline
 
 st.title("🎈 My new app") 
 st.write(  
     "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
 )
-import streamlit as st
-from transformers import pipeline
 
 st.title("Text To Audio App")
 # إعداد الـ pipeline
@@ -26,5 +25,4 @@ with col[0]:
     elif btn:
         st.warning("رجاءً أدخل نص!")
 
-with col[1]:
-    st.image("images/text_to_audio.jpg") 
+ 
